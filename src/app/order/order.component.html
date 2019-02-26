@@ -25,8 +25,8 @@
           [class.has-success]="iptEndereco.valid && (iptEndereco.dirty || iptEndereco.touched)"
           [class.has-error]="!iptEndereco.valid && (iptEndereco.dirty || iptEndereco.touched)">
           <div class="form-group">
-            <label class="control-label sr-only" for="inputSuccess"><i class="fa fa-check"></i> Endereço</label>
-            <input type="text" class="form-control" name="endereco" #iptEndereco="ngModel" ngModel required
+            <label class="control-label sr-only" for="endereco"><i class="fa fa-check"></i> Endereço</label>
+            <input type="text" class="form-control" name="endereco" id="endereco" #iptEndereco="ngModel" ngModel required
               minlength="5" placeholder="Endereço">
             <span *ngIf="iptEndereco.valid && (iptEndereco.dirty || iptEndereco.touched)" class="help-block">
               <i class="fa fa-check"></i> Ok
@@ -40,8 +40,8 @@
           [class.has-success]="iptNumero.valid && (iptNumero.dirty || iptNumero.touched)"
           [class.has-error]="!iptNumero.valid && (iptNumero.dirty || iptNumero.touched)">
           <div class="form-group">
-            <label class="control-label sr-only" for="inputSuccess"><i class="fa fa-check"></i> Número</label>
-            <input type="text" class="form-control" name="numero" #iptNumero="ngModel" placeholder="Número" required
+            <label class="control-label sr-only" for="numero"><i class="fa fa-check"></i> Número</label>
+            <input type="text" class="form-control" name="numero" id="numero" #iptNumero="ngModel" placeholder="Número" required
               ngModel>
           </div>
           <span *ngIf="iptNumero.valid && (iptNumero.dirty || iptNumero.touched)" class="help-block">
@@ -53,8 +53,8 @@
         </div>
         <div class="col-sm-4 col-xs-6">
           <div class="form-group">
-            <label class="control-label sr-only" for="inputSuccess"><i class="fa fa-check"></i> Complemento</label>
-            <input type="text" class="form-control" name="complemento" #iptComplemento="ngModel"
+            <label class="control-label sr-only" for="complemento"><i class="fa fa-check"></i> Complemento</label>
+            <input type="text" class="form-control" name="complemento" id="complemento" #iptComplemento="ngModel"
               placeholder="Complemento" ngModel>
           </div>
 
