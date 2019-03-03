@@ -7,6 +7,7 @@ import { MenuComponent } from './restaurant-detail/menu/menu.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { OrderComponent } from './order/order.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 export const ROUTES: Routes = [
     { path: '', component: HomeComponent },
@@ -20,5 +21,6 @@ export const ROUTES: Routes = [
         ]
     },
     { path: 'order', component: OrderComponent },
+    { path: 'order-summary', component: OrderSummaryComponent },
     { path: 'restaurants', component: RestaurantsComponent }
 ];
