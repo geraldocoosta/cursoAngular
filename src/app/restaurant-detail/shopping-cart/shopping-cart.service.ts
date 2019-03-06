@@ -25,7 +25,6 @@ export class ShoppingCartService {
             return;
         }
         this.items.push(new CartItem(item));
-
     }
 
     remove(item: CartItem) {
