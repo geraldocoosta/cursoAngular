@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { RadioOption } from 'app/shared/radio/radio-option.model';
 import { CartItem } from 'app/restaurant-detail/shopping-cart/cart-item.model';
@@ -14,6 +14,9 @@ import { OrderService } from './order.service';
 export class OrderComponent implements OnInit {
 
   orderForm: FormGroup;
+
+  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  numberPattern = /^[0-9]*$/;
 
   paymentOptions: RadioOption[] = [
     { label: 'Dinheiro', value: 'MON' },
@@ -29,14 +32,31 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
-      nome: this.formBuilder.control('',[Validators.required,Validators.minLength(1)]), // forma reduzida da próxima
-      email: this.formBuilder.control(''),
-      confimacaoEmail: this.formBuilder.control(''),
-      endereco: this.formBuilder.control(''),
-      numero: this.formBuilder.control(''),
+      nome: this.formBuilder.control('', [Validators.required, Validators.minLength(1)]), // forma reduzida da próxima
+      email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
+      confimacaoEmail: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
+      endereco: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
+      numero: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
       complemento: this.formBuilder.control(''),
-      paymentOption: this.formBuilder.control('')
-    });
+      paymentOption: this.formBuilder.control('', [Validators.required, Validators.minLength(1)])
+    }, {
+        validator: OrderComponent.emailEquals
+      });
+  }
+
+  static emailEquals(group: AbstractControl): { [key: string]: boolean } {
+    const email = group.get('email');
+    const confirmacaoEmail = group.get('confimacaoEmail');
+
+    if (!email || !confirmacaoEmail) {
+      return undefined;
+    }
+
+    if (email.value !== confirmacaoEmail.value) {
+      return { 'erroNaValidacao': true };
+    }
+
+    return undefined;
   }
 
   itemsValue(): number {
