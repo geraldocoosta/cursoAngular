@@ -13,11 +13,10 @@ import { OrderService } from './order.service';
 })
 export class OrderComponent implements OnInit {
 
-  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-  numberPattern = /^[0-9]*$/;
-
   orderForm: FormGroup;
+
+  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  numberPattern = /^[0-9]*$/;
 
   paymentOptions: RadioOption[] = [
     { label: 'Dinheiro', value: 'MON' },
@@ -39,13 +38,13 @@ export class OrderComponent implements OnInit {
       endereco: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       numero: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
       complemento: this.formBuilder.control(''),
-      paymentOption: this.formBuilder.control('', [Validators.required])
+      paymentOption: this.formBuilder.control('', [Validators.required, Validators.minLength(1)])
     }, {
-        validator: OrderComponent.equalsTo
+        validator: OrderComponent.emailEquals
       });
   }
 
-  static equalsTo(group: AbstractControl): { [key: string]: boolean } {
+  static emailEquals(group: AbstractControl): { [key: string]: boolean } {
     const email = group.get('email');
     const confirmacaoEmail = group.get('confimacaoEmail');
 
@@ -54,7 +53,9 @@ export class OrderComponent implements OnInit {
     }
 
     if (email.value !== confirmacaoEmail.value) {
+
       return { 'emailComErro': true };
+
     }
 
     return undefined;
