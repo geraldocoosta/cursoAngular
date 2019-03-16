@@ -1,10 +1,14 @@
-import { NgModule } from "@angular/core";
+import { NgModule, ModuleWithProviders } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
 import { InputComponent } from "./input/input.component";
 import { RadioComponent } from "./radio/radio.component";
 import { RatingComponent } from "./rating/rating.component";
+
+import { RestaurantService } from "app/restaurants/restaurant.service";
+import { ShoppingCartService } from "app/restaurant-detail/shopping-cart/shopping-cart.service";
+import { OrderService } from "app/order/order.service";
 
 @NgModule({
     declarations:
@@ -23,4 +27,12 @@ import { RatingComponent } from "./rating/rating.component";
             FormsModule,
             ReactiveFormsModule]
 })
-export class SharedModule { }
+export class SharedModule {
+    static foorRoot(): ModuleWithProviders {
+        return {
+            ngModule: SharedModule,
+            providers: [OrderService, ShoppingCartService, RestaurantService]
+        };
+    }
+
+}
